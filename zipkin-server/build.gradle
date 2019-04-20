@@ -1,0 +1,16 @@
+bootJar {
+    baseName = 'zipkin-server'
+    version = '0.0.1-SNAPSHOT'
+}
+dependencies {
+    compile('org.springframework.boot:spring-boot-starter')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('io.zipkin.java:zipkin-server:2.8.3'){
+        exclude group:'org.apache.logging.log4j', module:'log4j-slf4j-impl'
+        exclude group:'io.zipkin.java', module:'zipkin'
+        exclude module:'zipkin-autoconfigure-metrics-prometheus'
+    }
+//    compile('io.zipkin.java:zipkin-ui:2.8.3')
+    compile('io.zipkin.java:zipkin:2.8.3')
+    compile('io.zipkin.java:zipkin-autoconfigure-ui:2.8.3')
+}

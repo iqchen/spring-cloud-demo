@@ -1,0 +1,65 @@
+buildscript {
+    ext {
+        springBootVersion = '2.0.1.RELEASE'
+    }
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+allprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: 'eclipse'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    dependencyManagement {
+        imports {
+            mavenBom 'org.springframework.cloud:spring-cloud-dependencies:Finchley.M9'
+        }
+    }
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://repo.spring.io/libs-milestone'
+        }
+    }
+    eclipse {
+        classpath {
+            containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+            containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8'
+        }
+    }
+}
+
+subprojects {
+    dependencies {
+        /**
+         * JAXB API是java EE 的API，因此在java SE 9.0 中不再包含这个 Jar 包。
+         * java 9 中引入了模块的概念，默认情况下，Java SE中将不再包含java EE 的Jar包
+         * 而在 java 6/7 / 8 时关于这个API 都是捆绑在一起的
+         * https://stackoverflow.com/questions/43574426/how-to-resolve-java-lang-noclassdeffounderror-javax-xml-bind-jaxbexception-in-j#43574427
+         * https://blog.csdn.net/hadues/article/details/79188793
+         */
+        compile('javax.xml.bind:jaxb-api:2.3.0')
+        compile('com.sun.xml.bind:jaxb-core:2.3.0')
+        compile('com.sun.xml.bind:jaxb-impl:2.3.0')
+        compile 'com.sun.activation:javax.activation:1.2.0'
+        compile('org.springframework.boot:spring-boot-starter-test')
+        testCompile('junit:junit')
+    }
+}
+
+bootJar {
+    baseName = 'spring-cloud-demo'
+    version =  '0.1.0'
+}
+
+sourceCompatibility = 10
+targetCompatibility = 10
+
+

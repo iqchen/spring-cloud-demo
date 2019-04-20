@@ -1,0 +1,10 @@
+bootJar {
+    baseName = 'zuul-service'
+    version = '0.0.1-SNAPSHOT'
+}
+dependencies {
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+    compile('org.springframework.cloud:spring-cloud-starter-netflix-zuul')
+    compile('org.springframework.boot:spring-boot-starter-web')
+    compile('org.springframework.cloud:spring-cloud-starter-zipkin')
+}

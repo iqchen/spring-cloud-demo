@@ -1,0 +1,17 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone         : http://localhost:9001/eureka/
+server:
+  port                    : 9004
+  contextPath             : /feign
+  servlet-path            : /feign
+spring:
+  application:
+    name                  : feign-service
+  zipkin:
+    base-url              : http://localhost:9006
+
+feign:
+  hystrix:
+    enabled               : true
